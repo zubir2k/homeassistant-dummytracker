@@ -1,0 +1,12 @@
+{
+  "domain": "dummy_tracker",
+  "name": "Dummy Device Tracker",
+  "codeowners": ["@zubir2k"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/zubir2k/homeassistant-dummytracker",
+  "issue_tracker": "https://github.com/zubir2k/homeassistant-dummytracker/issues",
+  "requirements": [],
+  "iot_class": "local_polling",
+  "version": "1.0.2"  
+}
