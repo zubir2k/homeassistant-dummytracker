@@ -3,11 +3,9 @@
         "step": {
             "user": {
                 "title": "Dummy Device Tracker Configuration",
-                "description": "Drop a pin on the map to set the fixed location for the dummy device tracker and specify a name for the entity.",
+                "description": "Drop a pin on the map to set the fixed location for the dummy device tracker",
                 "data": {
-                    "name": "Device Name",
-                    "location": "Location",
-					"entity_name": "Entity Name"
+                    "location": "Location"
                 }
             }
         }

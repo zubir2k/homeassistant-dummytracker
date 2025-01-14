@@ -12,8 +12,6 @@ from homeassistant.helpers.selector import LocationSelector
 DOMAIN = "dummy_tracker"
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Dummy Device Tracker."""
-
     VERSION = 1
 
     async def async_step_user(
@@ -23,12 +21,15 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             lat: float = user_input[CONF_LOCATION][CONF_LATITUDE]
             lon: float = user_input[CONF_LOCATION][CONF_LONGITUDE]
-            entity_name: str = user_input["Entity Name"]
-            await self.async_set_unique_id(f"dummy_tracker_{entity_name.replace(' ', '_').lower()}")
+            
+            # Make entity name optional
+            entity_name = user_input.get("entity_name", f"location_{lat}_{lon}")
+            
+            await self.async_set_unique_id(f"dummy_tracker_{entity_name}")
             self._abort_if_unique_id_configured()
 
             return self.async_create_entry(
-                title=f"{entity_name}",
+                title=entity_name,
                 data={
                     CONF_LATITUDE: lat,
                     CONF_LONGITUDE: lon,
@@ -46,7 +47,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=vol.Schema(
                 {
                     vol.Required(CONF_LOCATION, default=home_location): LocationSelector(),
-                    vol.Required("entity_name"): str,
+                    vol.Optional("entity_name"): str,
                 }
             ),
         )

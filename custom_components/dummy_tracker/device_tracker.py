@@ -51,15 +51,21 @@ class DummyDeviceTracker(CoordinatorEntity, TrackerEntity):
     """Represent a tracked device."""
 
     _attr_has_entity_name = True
-    _attr_name = None
 
     def __init__(self, coordinator: DummyDeviceCoordinator) -> None:
         """Set up tracker."""
         super().__init__(coordinator)
-        entity_name = coordinator.config_entry.data.get("entity_name", "default_name")
-        self._attr_unique_id = f"dummy_tracker_{entity_name}"
-        self.entity_id = f"device_tracker.dummy_{entity_name.replace(' ', '_').lower()}"
+        
+        # Get entity name from config or generate from coordinates
+        entity_name = self.coordinator.config_entry.data.get("entity_name")
 
+        # Set unique ID and entity ID
+        self._attr_unique_id = f"dummy_tracker_{entity_name}"
+        self.entity_id = f"device_tracker.dummy_{entity_name.lower().replace(' ', '_')}"
+        
+        # Set name for display
+        self._attr_name = entity_name
+        
     @property
     def source_type(self) -> SourceType:
         """Return the source type of the device."""
