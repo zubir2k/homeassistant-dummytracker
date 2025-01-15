@@ -34,3 +34,6 @@ Congrats! a new `device_tracker` entity has been created.
 
 ## I love it! 🤩
 Thank you.. do leave a ⭐ to this repo.
+
+## And.. just to be clear ⚠
+This dummy tracker is intended for simulation and testing. Any form of misuse or reliance on this tracker for real-world scenarios is strongly discouraged. The developers are not responsible for any consequences arising from incorrect use of this tool. Use it at your own risk.
