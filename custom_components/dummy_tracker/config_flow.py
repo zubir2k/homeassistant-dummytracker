@@ -12,6 +12,8 @@ from homeassistant.helpers.selector import LocationSelector
 DOMAIN = "dummy_tracker"
 
 class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
+    """Handle a config flow for Dummy Device Tracker."""
+    
     VERSION = 1
 
     async def async_step_user(
@@ -51,3 +53,9 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
                 }
             ),
         )
+
+    @staticmethod
+    def async_get_options_flow(config_entry):
+        """Create the options flow."""
+        from .options_flow import OptionsFlowHandler
+        return OptionsFlowHandler(config_entry)
