@@ -1,4 +1,5 @@
-# Home Assistant: Dummy Device Tracker 📌
+![logo@2x](https://github.com/user-attachments/assets/44277989-5174-48c8-b5a4-e10f042b15b3)
+
 [![hacs_badge](https://img.shields.io/badge/HACS-Integration-41BDF5.svg)](https://github.com/hacs/integration)
 ![GitHub all releases](https://img.shields.io/badge/dynamic/json?color=41BDF5&logo=home-assistant&label=Download%20Count&suffix=%20installs&cacheSeconds=15600&url=https://analytics.home-assistant.io/custom_integrations.json&query=$.dummy_tracker.total)
 [![Buy](https://img.shields.io/badge/Belanja-Coffee-yellow.svg)](https://zubirco.de/buymecoffee)
