@@ -25,7 +25,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             lon: float = user_input[CONF_LOCATION][CONF_LONGITUDE]
             
             # Make entity name optional
-            entity_name = user_input.get("entity_name", f"location_{lat}_{lon}")
+            entity_name = user_input.get("Entity Name", f"location_{lat}_{lon}")
             
             await self.async_set_unique_id(f"dummy_tracker_{entity_name}")
             self._abort_if_unique_id_configured()
@@ -49,7 +49,7 @@ class ConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             data_schema=vol.Schema(
                 {
                     vol.Required(CONF_LOCATION, default=home_location): LocationSelector(),
-                    vol.Optional("entity_name"): str,
+                    vol.Optional("Entity Name"): str,
                 }
             ),
         )
