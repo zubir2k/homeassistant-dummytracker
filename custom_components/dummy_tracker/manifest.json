@@ -1,6 +1,7 @@
 {
   "domain": "dummy_tracker",
   "name": "Dummy Device Tracker",
+  "categories": ["presence_location.trackers"],
   "codeowners": ["@zubir2k"],
   "config_flow": true,
   "dependencies": [],
