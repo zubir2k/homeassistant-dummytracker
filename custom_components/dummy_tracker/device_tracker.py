@@ -1,92 +1,56 @@
-"""Support for Dummy Device Tracker."""
+"""Device tracker platform for the Dummy Device Tracker integration."""
 from __future__ import annotations
 
-from homeassistant.components.device_tracker import SourceType, TrackerEntity
+from homeassistant.components.device_tracker import TrackerEntity
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.core import HomeAssistant
-from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.update_coordinator import (
-    CoordinatorEntity,
-    DataUpdateCoordinator,
-)
 from homeassistant.const import CONF_LATITUDE, CONF_LONGITUDE
-import datetime
-import logging
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.device_registry import DeviceEntryType, DeviceInfo
+from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
+from homeassistant.util import slugify
 
-_LOGGER = logging.getLogger(__name__)
+from .const import CONF_ENTITY_NAME, DEFAULT_GPS_ACCURACY, DOMAIN
+
 
 async def async_setup_entry(
     hass: HomeAssistant,
-    config_entry: ConfigEntry,
-    async_add_entities: AddEntitiesCallback,
+    entry: ConfigEntry,
+    async_add_entities: AddConfigEntryEntitiesCallback,
 ) -> None:
-    """Set up the Dummy Device Tracker from config entry."""
-    coordinator = DummyDeviceCoordinator(hass, config_entry)
-    await coordinator.async_config_entry_first_refresh()
-    async_add_entities([DummyDeviceTracker(coordinator)])
+    """Set up the Dummy Device Tracker from a config entry."""
+    async_add_entities([DummyDeviceTracker(entry)])
 
-class DummyDeviceCoordinator(DataUpdateCoordinator):
-    """Dummy device coordinator."""
 
-    def __init__(self, hass: HomeAssistant, config_entry: ConfigEntry) -> None:
-        """Initialize coordinator."""
-        super().__init__(
-            hass,
-            logger=_LOGGER,
-            name="Dummy Device Tracker",
-            update_interval=datetime.timedelta(seconds=60),
-        )
-        self.config_entry = config_entry
+class DummyDeviceTracker(TrackerEntity):
+    """A device tracker pinned to a fixed GPS location.
 
-    async def _async_update_data(self):
-        """Update device location."""
-        return {
-            "latitude": self.config_entry.data[CONF_LATITUDE],
-            "longitude": self.config_entry.data[CONF_LONGITUDE],
-            "gps_accuracy": 10,
-            "battery_level": 100,
-        }
-
-class DummyDeviceTracker(CoordinatorEntity, TrackerEntity):
-    """Represent a tracked device."""
+    The location never changes on its own, so there is nothing to poll:
+    the entity writes its state once, and the options flow reloads the
+    entry when the pin is moved.
+    """
 
     _attr_has_entity_name = True
+    _attr_name = None  # Use the device name as the entity name.
+    _attr_should_poll = False
 
-    def __init__(self, coordinator: DummyDeviceCoordinator) -> None:
+    def __init__(self, entry: ConfigEntry) -> None:
         """Set up tracker."""
-        super().__init__(coordinator)
-        
-        # Get entity name from config or generate from coordinates
-        entity_name = self.coordinator.config_entry.data.get("entity_name")
+        # Options (set by the options flow) win over the original data.
+        config = {**entry.data, **entry.options}
+        entity_name: str = config[CONF_ENTITY_NAME]
 
-        # Set unique ID and entity ID
+        self._attr_latitude = float(config[CONF_LATITUDE])
+        self._attr_longitude = float(config[CONF_LONGITUDE])
+        self._attr_location_accuracy = DEFAULT_GPS_ACCURACY
+
+        # Unique ID and entity ID kept compatible with v1.0.x.
         self._attr_unique_id = f"dummy_tracker_{entity_name}"
-        self.entity_id = f"device_tracker.dummy_{entity_name.lower().replace(' ', '_')}"
-        
-        # Set name for display
-        self._attr_name = entity_name
-        
-    @property
-    def source_type(self) -> SourceType:
-        """Return the source type of the device."""
-        return SourceType.GPS
+        self.entity_id = f"device_tracker.dummy_{slugify(entity_name)}"
 
-    @property
-    def latitude(self) -> float | None:
-        """Return latitude value of the device."""
-        return self.coordinator.data["latitude"]
-
-    @property
-    def longitude(self) -> float | None:
-        """Return longitude value of the device."""
-        return self.coordinator.data["longitude"]
-
-    @property
-    def location_accuracy(self) -> int:
-        """Return the location accuracy of the device."""
-        return self.coordinator.data["gps_accuracy"]
-
-    @property
-    def battery_level(self) -> int | None:
-        """Return the battery level of the device."""
-        return self.coordinator.data["battery_level"]
+        self._attr_device_info = DeviceInfo(
+            identifiers={(DOMAIN, entry.entry_id)},
+            name=entity_name,
+            manufacturer="zubir2k",
+            model="Dummy Device Tracker",
+            entry_type=DeviceEntryType.SERVICE,
+        )

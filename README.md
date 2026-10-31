@@ -34,6 +34,16 @@ Once installation is complete, restart your Home Assistant.
 Congrats! A new `device_tracker` entity has been created. 🎊  
 (Well, don't forget you will still require to assign the `device_tracker` to a person entity 🙋🏻‍♂️)
 
+### Moving the pin later 📍  
+Go to `Settings > Devices & Services > Dummy Device Tracker`, pick your tracker and hit `Configure`. Drag the pin, submit, and the tracker jumps there right away.
+
+## What's new in v1.1.0 ✨  
+- Ready for Home Assistant 2026.11 (minimum is now 2025.8.0).  
+- Fixed: moving a tracker via `Configure` now actually updates its location.  
+- Each tracker now shows up as its own device.  
+- No more polling every 60 seconds; the location is static, so the state is written once.  
+- The fake `battery_level` attribute is gone (Home Assistant deprecated it on device trackers; it stops working in 2027.7).  
+
 ## I love it! 🤩  
 Thank you! If you like it, please consider leaving a ⭐ for this repo.  
 

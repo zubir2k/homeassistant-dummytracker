@@ -1,4 +1,4 @@
 {
-    "name": "Dummy Device Tracker",
-    "homeassistant": "2025.1.1"
+  "name": "Dummy Device Tracker",
+  "homeassistant": "2025.8.0"
 }

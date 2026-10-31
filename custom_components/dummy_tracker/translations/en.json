@@ -1,13 +1,32 @@
 {
-    "config": {
-        "step": {
-            "user": {
-                "title": "Dummy Device Tracker Configuration",
-                "description": "Drop a pin on the map to set the fixed location for the dummy device tracker",
-                "data": {
-                    "location": "Location"
-                }
-            }
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add a dummy device tracker",
+        "description": "Drop a pin on the map to set the fixed location of the dummy tracker.",
+        "data": {
+          "location": "Location",
+          "name": "Name"
+        },
+        "data_description": {
+          "location": "The tracker reports these coordinates permanently.",
+          "name": "Optional. Used for the device and entity name. Leave empty to name it after the coordinates."
         }
+      }
+    },
+    "abort": {
+      "already_configured": "A dummy tracker with this name already exists."
     }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Move the dummy tracker",
+        "description": "Drag the pin to change where this tracker reports its location.",
+        "data": {
+          "location": "Location"
+        }
+      }
+    }
+  }
 }
