@@ -1,6 +1,8 @@
 """Device tracker platform for the Dummy Device Tracker integration."""
 from __future__ import annotations
 
+from typing import Final
+
 from homeassistant.components.device_tracker import TrackerEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import CONF_LATITUDE, CONF_LONGITUDE
@@ -10,6 +12,8 @@ from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.util import slugify
 
 from .const import CONF_ENTITY_NAME, DEFAULT_GPS_ACCURACY, DOMAIN
+
+PARALLEL_UPDATES: Final = 0
 
 
 async def async_setup_entry(
