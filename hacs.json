@@ -1,4 +1,6 @@
 {
   "name": "Dummy Device Tracker",
-  "homeassistant": "2025.8.0"
+  "homeassistant": "2025.8.0",
+  "zip_release": true,
+  "filename": "dummy_tracker.zip"
 }
