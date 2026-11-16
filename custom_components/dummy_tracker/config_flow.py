@@ -9,7 +9,7 @@ from homeassistant.config_entries import (
     ConfigEntry,
     ConfigFlow,
     ConfigFlowResult,
-    OptionsFlowWithReload,
+    OptionsFlow,
 )
 from homeassistant.const import CONF_LATITUDE, CONF_LOCATION, CONF_LONGITUDE, CONF_NAME
 from homeassistant.core import callback
@@ -73,7 +73,7 @@ class DummyTrackerConfigFlow(ConfigFlow, domain=DOMAIN):
         return DummyTrackerOptionsFlow()
 
 
-class DummyTrackerOptionsFlow(OptionsFlowWithReload):
+class DummyTrackerOptionsFlow(OptionsFlow):
     """Move the dummy tracker to a new location."""
 
     async def async_step_init(
