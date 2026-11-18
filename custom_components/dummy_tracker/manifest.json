@@ -1,8 +1,12 @@
 {
   "domain": "dummy_tracker",
   "name": "Dummy Device Tracker",
-  "categories": ["presence_location.trackers"],
-  "codeowners": ["@zubir2k"],
+  "categories": [
+    "presence_location.trackers"
+  ],
+  "codeowners": [
+    "@zubir2k"
+  ],
   "config_flow": true,
   "dependencies": [],
   "documentation": "https://github.com/zubir2k/homeassistant-dummytracker",
@@ -10,5 +14,6 @@
   "iot_class": "calculated",
   "issue_tracker": "https://github.com/zubir2k/homeassistant-dummytracker/issues",
   "requirements": [],
-  "version": "1.1.4"
+  "version": "1.1.5",
+  "quality_scale": "bronze"
 }
